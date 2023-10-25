@@ -1,4 +1,4 @@
-import { Grid, Heading, UnorderedList } from '@chakra-ui/react'
+import {Text, UnorderedList } from '@chakra-ui/react'
 import { ExpenseData } from '../../App'
 import ExpenseItem from './ExpenseItem'
 
@@ -9,7 +9,7 @@ interface Props {
 const ExpensesList = ({expenses}: Props) => {
 
     if (expenses.length === 0) {
-        return <Heading>No expenses found</Heading>
+        return <Text>No expenses found</Text>
     }
 
 

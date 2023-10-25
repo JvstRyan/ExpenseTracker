@@ -1,7 +1,10 @@
 import { useState } from "react";
 import ExpenseForm from "./components/ExpenseCreation/ExpenseForm";
 import ExpensesList from "./components/ExpenseDisplay/ExpensesList";
-import { Box, Container, Flex, Grid, SimpleGrid, Spacer } from "@chakra-ui/react";
+import ExpenseChart from "./components/ExpenseDisplay/ExpenseChart";
+import ExpenseFilter from "./components/ExpenseDisplay/ExpenseFilter";
+import { Flex, SimpleGrid} from "@chakra-ui/react";
+import DUMMY_EXPENSES from "./components/data/DummyData";
 
 export interface ExpenseData {
   title: string;
@@ -10,36 +13,10 @@ export interface ExpenseData {
   id: string;
 }
 
-const DUMMY_EXPENSES = [
-  {
-    id: "e1",
-    title: "Toilet Paper",
-    amount: 94.12,
-    date: new Date(2023, 7, 14),
-  },
-  { id: "e2", title: "New TV", amount: 799.49, date: new Date(2023, 2, 12) },
-  {
-    id: "e3",
-    title: "Car Insurance",
-    amount: 294.67,
-    date: new Date(2023, 2, 28),
-  },
-  {
-    id: "e4",
-    title: "New Desk (Wooden)",
-    amount: 450,
-    date: new Date(2023, 5, 12),
-  },
-  {
-    id: "e5",
-    title: "McDonalds BigMac",
-    amount: 20.95,
-    date: new Date(2023, 5, 12),
-  },
-];
 
 function App() {
   const [expenses, setExpenses] = useState<ExpenseData[]>(DUMMY_EXPENSES);
+  const [filteredYear, setFilteredYear] = useState("2023");
 
   const addExpenseHandler = (expense: ExpenseData) => {
     setExpenses(prevExpenses => {
@@ -47,13 +24,26 @@ function App() {
     })
   };
 
+  const savedYearDataHandler = (selectedYear: string) => {
+    setFilteredYear(selectedYear);
+  };
+
+  const filteredExpenses = expenses.filter((expense) =>{
+    return expense.date.getFullYear().toString() === filteredYear
+  })
+
   return (
     <>
       <SimpleGrid columns={[1, 1, 2]} justifyContent={'center'} alignItems={'center'} padding={10} spacing={'50px'}>
-      <Box alignSelf={'start'}>
+      <Flex flexDirection={'column'} gap={4} alignSelf={'start'}>
       <ExpenseForm onSaveExpenseData={addExpenseHandler} />
-      </Box>
-      <ExpensesList expenses={expenses} />
+      <ExpenseFilter
+      selected={filteredYear}
+      forwardedYearData={savedYearDataHandler}
+       />
+       <ExpenseChart expenses={filteredExpenses} />
+      </Flex>
+      <ExpensesList expenses={filteredExpenses} />
       </SimpleGrid>
     </>
   );
