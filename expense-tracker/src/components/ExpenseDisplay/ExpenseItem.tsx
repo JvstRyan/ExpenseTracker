@@ -1,4 +1,4 @@
-import { Box, Card, Flex, ListItem, Spacer, Text } from '@chakra-ui/react'
+import { Card, Flex, ListItem, Spacer, Text } from '@chakra-ui/react'
 import ExpenseDate from './ExpenseDate'
 
 

@@ -24,6 +24,24 @@ const DUMMY_EXPENSES = [
       amount: 20.95,
       date: new Date(2023, 5, 12),
     },
+    {
+        id: "e6",
+        title: "Restaurant",
+        amount: 89.10,
+        date: new Date(2023, 7, 12),
+      },
+      {
+        id: "e7",
+        title: "Groceries",
+        amount: 120,
+        date: new Date(2023, 3, 12),
+      },
+      {
+        id: "e8",
+        title: "Iphone 15",
+        amount: 890,
+        date: new Date(2023, 9, 12),
+      },
   ];
   
   export default DUMMY_EXPENSES

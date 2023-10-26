@@ -1,4 +1,3 @@
-import React from 'react'
 import { ExpenseData } from '../../App'
 import Chart from '../Chart/Chart'
 
@@ -39,3 +38,5 @@ for( const expense of expenses) {
 }
 
 export default ExpenseChart
+
+
