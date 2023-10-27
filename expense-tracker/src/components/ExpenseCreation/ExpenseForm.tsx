@@ -1,11 +1,10 @@
 import {
-    Box,
+  Box,
   Button,
   FormControl,
   FormLabel,
-  Grid,
   Input,
-  SimpleGrid,
+  SimpleGrid
 } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
 import { ExpenseData } from "../../App";
@@ -18,6 +17,7 @@ const ExpenseForm = ({ onSaveExpenseData }: Props) => {
   const [enteredTitle, setEnteredTitle] = useState<string>("");
   const [enteredAmount, setEnteredAmount] = useState<string>("");
   const [enteredDate, setEnteredDate] = useState<string>("");
+  const [isValid, setisValid] = useState<boolean>(true);
 
   const submithandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,7 +29,17 @@ const ExpenseForm = ({ onSaveExpenseData }: Props) => {
       id: crypto.randomUUID(),
     };
 
-    console.log(ExpenseData)
+    if (enteredTitle.trim().length === 0) {
+      return setisValid(false)
+    }
+
+   if (enteredAmount.trim().length === 0) {
+    return setisValid(false)
+   }
+
+   if (enteredDate.trim().length === 0) {
+    return setisValid(false)
+   }
 
     onSaveExpenseData(ExpenseData);
 
@@ -48,7 +58,8 @@ const ExpenseForm = ({ onSaveExpenseData }: Props) => {
               <Input
                 type="text"
                 value={enteredTitle}
-                onChange={(event) => setEnteredTitle(event.target.value)}
+                onChange={(event) => { {event.target.value.length > 0 ? setisValid(true) : setisValid(false)} setEnteredTitle(event.target.value)}}
+                {...!isValid && {borderColor: 'red.500'}}
               />
             </Box>
             <Box w={"100%"}>
@@ -58,7 +69,8 @@ const ExpenseForm = ({ onSaveExpenseData }: Props) => {
                 min={"0.01"}
                 step={"0.01"}
                 value={enteredAmount}
-                onChange={(event) => setEnteredAmount(event.target.value)}
+                onChange={(event) => {{event.target.value.length > 0 ? setisValid(true) : setisValid(false)} setEnteredAmount(event.target.value)}}
+              {...!isValid && {borderColor: 'red.500'}}
               />
             </Box>
             <Box w={"100%"}>
@@ -68,17 +80,20 @@ const ExpenseForm = ({ onSaveExpenseData }: Props) => {
                 value={enteredDate}
                 min={"2023-01-01"}
                 max={"2024-12-31"}
-                onChange={(event) => setEnteredDate(event.target.value)}
+                onChange={(event) => {{event.target.value.length > 0 ? setisValid(true) : setisValid(false)} setEnteredDate(event.target.value)}}
+              {...!isValid && {borderColor: 'red.500'}}
               />
             </Box>
-            <Button textColor={'white'} mt={3} minW={"30%"}  bg={"blue.500"} type="submit">
+           <Button  textColor={'white'} mt={3} minW={"30%"}  bg={"blue.500"} type="submit">
               Submit
-            </Button>
+            </Button> 
         </SimpleGrid>
         </FormControl>
       </form>
     </>
   );
 };
+ 
+
 
 export default ExpenseForm;

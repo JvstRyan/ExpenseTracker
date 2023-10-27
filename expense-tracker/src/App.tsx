@@ -32,6 +32,12 @@ function App() {
     return expense.date.getFullYear().toString() === filteredYear
   })
 
+  const handleDelete = (id: string) => {
+    setExpenses(prevExpenses => {
+      return prevExpenses.filter(expense => expense.id !== id)
+    })
+  }
+
   return (
     <>
       <SimpleGrid columns={[1, 1, 2]} justifyContent={'center'} alignItems={'center'} padding={10} spacing={'50px'}>
@@ -43,7 +49,7 @@ function App() {
        />
        <ExpenseChart expenses={filteredExpenses} />
       </Flex>
-      <ExpensesList expenses={filteredExpenses} />
+      <ExpensesList handleDelete={handleDelete} expenses={filteredExpenses} />
       </SimpleGrid>
     </>
   );
